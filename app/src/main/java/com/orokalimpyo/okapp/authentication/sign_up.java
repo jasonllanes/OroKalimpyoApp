@@ -10,25 +10,33 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.jaredrummler.materialspinner.MaterialSpinner;
 import com.orokalimpyo.okapp.R;
+import com.orokalimpyo.okapp.firebase_crud.firebase_functions;
+
+import java.util.ArrayList;
 
 public class sign_up extends AppCompatActivity {
 
     EditText etFullname;
-
+    firebase_functions ff;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
-
+        ff = new firebase_functions();
         etFullname = findViewById(R.id.etFullname);
 
-        MaterialSpinner type = (MaterialSpinner) findViewById(R.id.spinner);
-        type.setItems("Household", "School", "Restaurant", "Bank", "Other");
+
+//        ArrayList<String> types = new ArrayList<String>();
+//        types.add("House");
+//        ff.populateUserType(types);
+        MaterialSpinner type = (MaterialSpinner) findViewById(R.id.sType);
+        type.setItems(ff.populateUserType());
         type.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener<String>() {
 
             @Override public void onItemSelected(MaterialSpinner view, int position, long id, String item) {
@@ -45,7 +53,7 @@ public class sign_up extends AppCompatActivity {
         });
 
         MaterialSpinner barangay = (MaterialSpinner) findViewById(R.id.sBarangay);
-        barangay.setItems("Nazareth", "Macasandig", "Camamanan", "Macanhan", "Canitoan");
+        barangay.setItems(ff.populateBarangay());
         barangay.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener<String>() {
 
             @Override public void onItemSelected(MaterialSpinner view, int position, long id, String item) {
