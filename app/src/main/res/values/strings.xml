@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">OroKalimpyo</string>
+
+    <string name="screen1">Recycle</string>
+    <string name="screen2">Record</string>
+    <string name="screen3">Track</string>
+    <string name="screen1desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
+        et dolore magna aliqua.</string>
+    <string name="screen2desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
+        et dolore magna aliqua.</string>
+    <string name="screen3desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
+        et dolore magna aliqua.</string>
+    <string name="startDesc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
+        et dolore magna aliqua.</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+    <string name="note">Don\'t know what type of plastic? Try using the following: </string>
+
+</resources>

@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@android:color/white"
+    tools:context=".profile.profile_fragment">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/circle_person"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="15dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Profile"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:fontFamily="@font/pbold"
+                    android:layout_marginTop="13dp"
+                    android:layout_marginLeft="5dp"/>
+
+            </LinearLayout>
+
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/profile_image"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:src="@drawable/profile"
+                android:layout_gravity="center"
+                app:civ_border_width="2dp"
+                app:civ_border_color="@color/black"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Type of User: "
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                android:fontFamily="@font/pbold"
+                android:layout_marginTop="13dp"
+                android:layout_marginHorizontal="15dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Household"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                android:fontFamily="@font/pmedium"
+                android:layout_marginHorizontal="15dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Name: "
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                android:fontFamily="@font/pbold"
+                android:layout_marginTop="13dp"
+                android:layout_marginHorizontal="15dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Jason's Residence"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                android:fontFamily="@font/pmedium"
+                android:layout_marginHorizontal="15dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Barangay: "
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                android:fontFamily="@font/pbold"
+                android:layout_marginTop="13dp"
+                android:layout_marginHorizontal="15dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nazareth"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                android:fontFamily="@font/pmedium"
+                android:layout_marginHorizontal="15dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Complete Address: "
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                android:fontFamily="@font/pbold"
+                android:layout_marginTop="13dp"
+                android:layout_marginHorizontal="15dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Upper 20 - 21st Nazareth, Cagayan de Oro City"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                android:fontFamily="@font/pmedium"
+                android:layout_marginHorizontal="15dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mobile Number: "
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                android:fontFamily="@font/pbold"
+                android:layout_marginTop="13dp"
+                android:layout_marginHorizontal="15dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="09166873915"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                android:fontFamily="@font/pmedium"
+                android:layout_marginHorizontal="15dp" />
+
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnEditProfile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Edit Profile"
+                android:textSize="15sp"
+                android:padding="15dp"
+                app:cornerRadius="25dp"
+                app:strokeWidth="2dp"
+                app:strokeColor="@color/green"
+                android:textColor="@color/green"
+                android:backgroundTint="@color/white"
+                android:layout_marginTop="20dp"
+                android:layout_marginHorizontal="50dp"
+                />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnSkip"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="View History"
+                android:textSize="15sp"
+                android:padding="15dp"
+                app:cornerRadius="25dp"
+                app:strokeWidth="2dp"
+                app:strokeColor="@color/green"
+                android:textColor="@color/green"
+                android:backgroundTint="@color/white"
+                android:layout_marginHorizontal="50dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnLogout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Logout"
+                android:fontFamily="@font/pmedium"
+                android:textSize="15sp"
+                android:textColor="@color/white"
+                android:padding="15dp"
+                app:backgroundTint="@color/green"
+                app:cornerRadius="25dp"
+                android:layout_marginHorizontal="50dp"
+                android:layout_marginBottom="80dp" />
+        </LinearLayout>
+
+    </ScrollView>
+
+
+
+
+</FrameLayout>

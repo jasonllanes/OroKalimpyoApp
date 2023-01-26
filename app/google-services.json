@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "772158884703",
+    "project_id": "orokalimpyo",
+    "storage_bucket": "orokalimpyo.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:772158884703:android:6664b24ceabc1da99c04ea",
+        "android_client_info": {
+          "package_name": "com.orokalimpyo.okapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "772158884703-6eg6mer3qrovrng3ra7ef8uv1lcbd9ee.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCRh0qBPjKSHns_QiaJY8HHGEwodQarxZo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "772158884703-6eg6mer3qrovrng3ra7ef8uv1lcbd9ee.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
