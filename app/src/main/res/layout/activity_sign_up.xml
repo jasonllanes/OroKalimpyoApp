@@ -103,7 +103,7 @@
                 android:textColorHint="@color/grey"
                 android:padding="15dp"
                 android:background="@drawable/edit_text_layout"
-                android:inputType="textEmailAddress"
+                android:inputType="text"
                 android:textColor="@color/black"
                 android:layout_marginTop="20dp"
                 android:layout_marginHorizontal="25dp"/>
@@ -116,7 +116,7 @@
                 android:orientation="horizontal">
 
                 <LinearLayout
-                    android:layout_width="150dp"
+                    android:layout_width="120dp"
                     android:layout_height="wrap_content"
                     android:background="@drawable/edit_text_layout"
                     android:padding="2dp"
@@ -131,13 +131,13 @@
                         android:hint="Gender"
                         android:gravity="left"
                         android:textColorHint="@color/grey"
-                        app:ms_hint="Type of User: "
+                        app:ms_hint="Gender "
                         app:ms_hint_color="@color/grey"
                         app:ms_arrow_tint="@color/black"
                         android:textColor="@color/black" />
                 </LinearLayout>
                 <EditText
-                    android:id="@+id/etPassword"
+                    android:id="@+id/etMobileNumber"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Mobile Number"
@@ -155,7 +155,7 @@
 
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnLogin"
+                android:id="@+id/btnNext"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Next"
@@ -182,16 +182,18 @@
                     android:textSize="12sp"
                     android:gravity="center"
                     android:layout_marginTop="10dp" />
+
                 <TextView
+                    android:id="@+id/tvLogin"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Log In"
-                    android:fontFamily="@font/pregular"
-                    android:textColor="@color/green"
-                    android:textSize="13sp"
-                    android:gravity="center"
                     android:layout_marginTop="10dp"
-                    android:layout_marginEnd="25dp"/>
+                    android:layout_marginEnd="25dp"
+                    android:fontFamily="@font/pregular"
+                    android:gravity="center"
+                    android:text="Log In"
+                    android:textColor="@color/green"
+                    android:textSize="13sp" />
 
             </LinearLayout>
 

@@ -62,9 +62,10 @@
                 android:layout_marginHorizontal="15dp" />
 
             <TextView
+                android:id="@+id/tvType"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Household"
+                android:text="[User Type]"
                 android:textColor="@color/black"
                 android:textSize="15sp"
                 android:fontFamily="@font/pmedium"
@@ -81,9 +82,10 @@
                 android:layout_marginHorizontal="15dp" />
 
             <TextView
+                android:id="@+id/tvFullname"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Jason's Residence"
+                android:text="[Name]"
                 android:textColor="@color/black"
                 android:textSize="15sp"
                 android:fontFamily="@font/pmedium"
@@ -100,9 +102,10 @@
                 android:layout_marginHorizontal="15dp" />
 
             <TextView
+                android:id="@+id/tvBarangay"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Nazareth"
+                android:text="[Barangay]"
                 android:textColor="@color/black"
                 android:textSize="15sp"
                 android:fontFamily="@font/pmedium"
@@ -119,9 +122,10 @@
                 android:layout_marginHorizontal="15dp" />
 
             <TextView
+                android:id="@+id/tvAddress"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Upper 20 - 21st Nazareth, Cagayan de Oro City"
+                android:text="[Address]"
                 android:textColor="@color/black"
                 android:textSize="15sp"
                 android:fontFamily="@font/pmedium"
@@ -138,9 +142,10 @@
                 android:layout_marginHorizontal="15dp" />
 
             <TextView
+                android:id="@+id/tvNumber"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="09166873915"
+                android:text="[Number]"
                 android:textColor="@color/black"
                 android:textSize="15sp"
                 android:fontFamily="@font/pmedium"

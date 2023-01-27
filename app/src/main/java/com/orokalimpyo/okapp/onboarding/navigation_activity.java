@@ -69,7 +69,7 @@ public class navigation_activity extends AppCompatActivity {
                     SharedPreferences sharedPref = getSharedPreferences("getting_started",Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPref.edit();
                     editor.putString("was_launched", "true");
-                    editor.apply();
+                    editor.commit();
                     startActivity(i);
                     finish();
                 }
@@ -79,6 +79,10 @@ public class navigation_activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(navigation_activity.this, log_in.class);
+                SharedPreferences sharedPref = getSharedPreferences("getting_started",Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putString("was_launched", "true");
+                editor.commit();
                 startActivity(i);
                 finish();
             }
