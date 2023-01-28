@@ -21,6 +21,7 @@ import android.provider.MediaStore;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -41,7 +42,9 @@ import java.nio.ByteOrder;
 
 public class add_record extends AppCompatActivity implements View.OnClickListener {
     int imageSize = 224;
-    Button btnScanPlastic,btnScanBrand,btnConfirm;
+    ImageView ivBack;
+    Button btnScanPlastic,btnScanBrand,btnConfirm,btnNext;
+    EditText etKilo;
     ShapeableImageView ivResult;
     TextView tvResult,tvDescription;
     MaterialSpinner sPlastic,sBrand;
@@ -54,13 +57,18 @@ public class add_record extends AppCompatActivity implements View.OnClickListene
         setContentView(R.layout.activity_add_record);
 
         ff = new firebase_functions();
+        ivBack = findViewById(R.id.ivBack);
         sPlastic = findViewById(R.id.sPlastic);
         sBrand = findViewById(R.id.sBrand);
+        etKilo = findViewById(R.id.etKilo);
         btnScanPlastic = findViewById(R.id.btnScanPlastic);
         btnScanBrand = findViewById(R.id.btnScanBrand);
+        btnNext = findViewById(R.id.btnNext);
 
+        ivBack.setOnClickListener(this);
         btnScanPlastic.setOnClickListener(this);
         btnScanBrand.setOnClickListener(this);
+        btnNext.setOnClickListener(this);
 
         populateSpinners();
 
@@ -69,6 +77,9 @@ public class add_record extends AppCompatActivity implements View.OnClickListene
     @Override
     public void onClick(View v) {
         switch (v.getId()){
+            case R.id.ivBack:
+                finish();
+                break;
             case R.id.btnScanPlastic:
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     if (checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
@@ -79,7 +90,6 @@ public class add_record extends AppCompatActivity implements View.OnClickListene
                         requestPermissions(new String[]{Manifest.permission.CAMERA}, 100);
                     }
                 }
-
                 break;
             case R.id.btnScanBrand:
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -91,10 +101,13 @@ public class add_record extends AppCompatActivity implements View.OnClickListene
                         requestPermissions(new String[]{Manifest.permission.CAMERA}, 100);
                     }
                 }
-
                 break;
             case R.id.btnNext:
-                replaceFragment(new record_fragment_2());
+                Intent i = new Intent(add_record.this,add_record_2.class);
+                i.putExtra("plastic",sPlastic.getText().toString());
+                i.putExtra("brand",sBrand.getText().toString());
+                i.putExtra("kilo",etKilo.getText().toString());
+                startActivity(i);
                 break;
         }
     }
@@ -297,8 +310,6 @@ public class add_record extends AppCompatActivity implements View.OnClickListene
             // TODO Handle the exception
         }
     }
-
-
 
     public void replaceFragment(Fragment fragment){
         FragmentManager fragmentManager = getSupportFragmentManager();

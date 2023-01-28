@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     android:orientation="vertical"
-    tools:context=".record.add_record">
+    tools:context=".record.add_record_2">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -46,7 +46,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Step 1"
+                android:text="Step 2"
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 android:fontFamily="@font/pbold"
@@ -62,38 +62,19 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Type of Plastic"
+                android:text="Upload image of the plastic"
                 android:textColor="@color/black"
                 android:textSize="18sp"
                 android:fontFamily="@font/pbold"
                 android:layout_marginTop="13dp"
                 android:layout_marginLeft="15dp"/>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/edit_text_layout"
-                android:padding="2dp"
-                android:layout_marginHorizontal="15dp">
-                <com.jaredrummler.materialspinner.MaterialSpinner
-                    android:id="@+id/sPlastic"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:ms_padding_left="10dp"
-                    android:textSize="17dp"
-                    android:hint="Type of Plastic"
-                    android:gravity="left"
-                    android:textColorHint="@color/grey"
-                    app:ms_hint="Type of User "
-                    app:ms_hint_color="@color/grey"
-                    app:ms_arrow_tint="@color/black"
-                    android:textColor="@color/green" />
-            </LinearLayout>
+
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Don\'t know what type of plastic? Try using our image classifier:"
+                android:text="NOTE: Take a clear picture of the plastics that you have."
                 android:textColor="@color/green"
                 android:textSize="12sp"
                 android:fontFamily="@font/pbolditalic"
@@ -101,13 +82,25 @@
                 android:layout_marginHorizontal="15dp"
                 android:layout_gravity="center"/>
 
+
+            <ImageView
+                android:id="@+id/ivPlastic"
+                android:layout_width="300dp"
+                android:layout_height="300dp"
+                android:layout_gravity="center"
+                android:background="@color/grey"
+                android:layout_margin="15dp"
+                app:strokeWidth="5dp"
+                app:strokeColor="@color/green"/>
+
+
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnScanPlastic"
+                android:id="@+id/btnUpload"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:icon="@drawable/scan"
+                app:icon="@drawable/upload"
                 app:iconTint="@color/white"
-                android:text="Identify"
+                android:text="Upload"
                 android:fontFamily="@font/pmedium"
                 android:textSize="15sp"
                 android:textColor="@color/white"
@@ -120,53 +113,20 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Type of Brand"
+                android:text="or"
                 android:textColor="@color/black"
                 android:textSize="18sp"
                 android:fontFamily="@font/pbold"
-                android:layout_marginTop="13dp"
-                android:layout_marginLeft="15dp"/>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/edit_text_layout"
-                android:padding="2dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginHorizontal="15dp">
-                <com.jaredrummler.materialspinner.MaterialSpinner
-                    android:id="@+id/sBrand"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:ms_padding_left="10dp"
-                    android:textSize="17dp"
-                    android:hint="Type of Brand"
-                    android:gravity="left"
-                    android:textColorHint="@color/grey"
-                    app:ms_hint="Type of User "
-                    app:ms_hint_color="@color/grey"
-                    app:ms_arrow_tint="@color/black"
-                    android:textColor="@color/green" />
-            </LinearLayout>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Don\'t know what the brand is? Try using our image classifier:"
-                android:textColor="@color/green"
-                android:textSize="12sp"
-                android:fontFamily="@font/pbolditalic"
-                android:layout_marginTop="13dp"
                 android:layout_marginHorizontal="15dp"
                 android:layout_gravity="center"/>
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnScanBrand"
+                android:id="@+id/btnCapture"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:icon="@drawable/scan"
+                app:icon="@drawable/camera"
                 app:iconTint="@color/white"
-                android:text="Identify"
+                android:text="Camera"
                 android:fontFamily="@font/pmedium"
                 android:textSize="15sp"
                 android:textColor="@color/white"
@@ -176,48 +136,21 @@
                 android:textAlignment="center"
                 android:layout_marginHorizontal="100dp"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Total Kilo of Plastics"
-                android:textColor="@color/black"
-                android:textSize="18sp"
-                android:fontFamily="@font/pbold"
-                android:layout_marginTop="13dp"
-                android:layout_marginLeft="15dp"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Don\'t have a weighing scale? \nJust let the collector handle it during collection:"
-                android:textColor="@color/green"
-                android:textSize="12sp"
-                android:fontFamily="@font/pbolditalic"
-                android:layout_marginTop="5dp"
-                android:layout_marginHorizontal="15dp"
-                android:layout_gravity="center"/>
 
-            <EditText
-                android:id="@+id/etKilo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Kilo"
-                android:textColorHint="@color/grey"
-                android:padding="15dp"
-                android:background="@drawable/edit_text_layout"
-                android:inputType="textEmailAddress"
-                android:textColor="@color/black"
-                android:layout_marginTop="10dp"
-                android:layout_marginHorizontal="15dp"/>
+
+
+
 
 
 
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnNext"
+                android:id="@+id/btnGenerate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Next"
+                android:visibility="gone"
+                android:text="Generate data into QR Code"
                 android:fontFamily="@font/pmedium"
                 android:textSize="15sp"
                 android:textColor="@color/white"
@@ -226,7 +159,7 @@
                 app:cornerRadius="25dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginHorizontal="25dp"
-                android:layout_marginBottom="20dp"/>
+                android:layout_marginBottom="80dp"/>
 
         </LinearLayout>
 

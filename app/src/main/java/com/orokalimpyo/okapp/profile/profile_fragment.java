@@ -25,7 +25,7 @@ import com.orokalimpyo.okapp.firebase_crud.firebase_functions;
 public class profile_fragment extends Fragment implements View.OnClickListener {
 
     Button btnLogout,btnYes,btnNo;
-    TextView tvType,tvFullname,tvBarangay,tvAddress,tvNumber;
+    public TextView tvType,tvFullname,tvBarangay,tvAddress,tvNumber;
     firebase_functions ff;
     FirebaseAuth mAuth;
     @Override

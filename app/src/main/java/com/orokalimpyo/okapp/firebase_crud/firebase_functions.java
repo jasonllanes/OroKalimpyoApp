@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.provider.MediaStore;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -14,6 +15,8 @@ import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -22,6 +25,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.orokalimpyo.okapp.authentication.log_in;
 import com.orokalimpyo.okapp.authentication.sign_up;
 import com.orokalimpyo.okapp.data.UserDetails;
@@ -34,10 +40,17 @@ public class firebase_functions {
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     FirebaseAuth mAuth;
+    FirebaseStorage storage = FirebaseStorage.getInstance();
+    StorageReference storageRef = storage.getReference();
+    private Uri filePath;
+    String _id,_type,_name,_barangay,_address,_number;
+
     List<String> types = new ArrayList<String>();
     List<String> barangay = new ArrayList<String>();
     List<String> plastic = new ArrayList<String>();
     List<String> brand = new ArrayList<String>();
+
+    List<String> data = new ArrayList<String>();
 
     public List<String> populateUserType(){
 
@@ -125,16 +138,6 @@ public class firebase_functions {
     }
 
 
-
-    public void check(Context context, Activity activity){
-        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
-            Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            activity.startActivityForResult(cameraIntent, 3);
-        } else {
-            ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.CAMERA}, 100);
-        }
-    }
-
     public void retrieveProfile(String id,TextView type, TextView name, TextView barangay, TextView address, TextView number){
         DatabaseReference profileReference = database.getReference("Users/" + id);
         profileReference.addValueEventListener(new ValueEventListener() {
@@ -155,6 +158,37 @@ public class firebase_functions {
 
             }
         });
+    }
+
+    public List<String> retrieveUserDetails(){
+        DatabaseReference profileReference = database.getReference("Users/" + mAuth.getUid());
+        profileReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                _id = mAuth.getUid();
+                _type = snapshot.child("user_type").getValue(String.class);
+                _name = snapshot.child("name").getValue(String.class);
+                _barangay = snapshot.child("barangay").getValue(String.class);
+                _address = snapshot.child("address").getValue(String.class);
+                _number = snapshot.child("number").getValue(String.class);
+
+                data.add(_id);
+                data.add(_type);
+                data.add(_name);
+                data.add(_barangay);
+                data.add(_address);
+                data.add(_number);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        return data;
+
     }
 
     public void logIn(Activity activity,Context context, String email, String password){
@@ -214,5 +248,18 @@ public class firebase_functions {
         activity.finish();
     }
 
-
+    public void saveQRStorage(byte[] bb,Context context, String barangay,String id){
+        StorageReference ref = storageRef.child(barangay+"Contribution_QRCodes/" + id + ".png");
+        ref.putBytes(bb).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                Toast.makeText(context, "Success", Toast.LENGTH_SHORT).show();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(context, "Failed", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 }
