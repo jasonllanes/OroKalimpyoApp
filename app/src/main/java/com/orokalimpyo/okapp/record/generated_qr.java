@@ -35,6 +35,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import androidmads.library.qrgenearator.QRGContents;
 import androidmads.library.qrgenearator.QRGEncoder;
@@ -51,9 +53,12 @@ public class generated_qr extends AppCompatActivity implements View.OnClickListe
 
 
     firebase_functions ff;
+
     String plastic,brand,kilo;
     String _id,_type,_name,_barangay,_address,_number;
 
+    SimpleDateFormat month,day,year,week,date,hours,minutes,seconds,time;
+    String currentMonth,currentDay,currentYear,currentWeek,currentDate,currentHour,currentMinute,currentSeconds,currentTime;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,14 +71,18 @@ public class generated_qr extends AppCompatActivity implements View.OnClickListe
 
 
 
+        retrieveDate();
+        retrieveRecentData();
+        generateQR(ivQR);
+
         ivBack.setOnClickListener(this);
         btnViewRecord.setOnClickListener(this);
 
 
-        retrieveRecentData();
+
 //        ff.retrieveUserDetails(_id,_type,_name,_barangay,_address,_number);
 //        _name = pf.tvFullname.getText().toString();
-        generateQR(ivQR);
+
 
 
     }
@@ -87,10 +96,48 @@ public class generated_qr extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    public void retrieveDate(){
+        month = new SimpleDateFormat("MM");
+        day = new SimpleDateFormat("dd");
+        year = new SimpleDateFormat("yy");
+
+        week = new SimpleDateFormat("W");
+
+        date = new SimpleDateFormat("MM/dd/yy");
+
+        hours = new SimpleDateFormat("hh");
+        minutes = new SimpleDateFormat("mm");
+        seconds = new SimpleDateFormat("ss");
+
+        time = new SimpleDateFormat("hh:mm:ss a");
+
+        currentMonth = month.format(new Date());
+        currentDay = day.format(new Date());
+        currentYear = year.format(new Date());
+
+        currentWeek = week.format(new Date());
+
+        currentDate = date.format(new Date());
+
+        currentHour = hours.format(new Date());
+        currentMinute = minutes.format(new Date());
+        currentSeconds = seconds.format(new Date());
+
+        currentTime = time.format(new Date());
+    }
+
+    public String generateID(){
+        String id = "";
+
+
+
+        return id;
+    }
+
     public void generateQR(ImageView imageView){
-//        QRGEncoder qrgEncoder = new QRGEncoder(_id + "\n" + _type+ "\n" +_name+ "\n" +_barangay+ "\n" +_address+ "\n" +_number+ "\n" + plastic
-//                + "\n" + brand + "\n" + kilo + "\n" + "gs://orokalimpyo.appspot.com/"+_barangay+"Contribution_QRCodes/"+ _id+".png" , null, QRGContents.Type.TEXT, 800);
-        QRGEncoder qrgEncoder = new QRGEncoder("Jason Kyut" , null, QRGContents.Type.TEXT, 800);
+        QRGEncoder qrgEncoder = new QRGEncoder(_id + "\n" + _type+ "\n" +_name+ "\n" +_barangay+ "\n" +_address+ "\n" +_number+ "\n" + plastic
+                + "\n" + brand + "\n" + kilo + "\n" + "gs://orokalimpyo.appspot.com/"+_barangay+"Contribution_QRCodes/"+ _id+".png" , null, QRGContents.Type.TEXT, 800);
+//        QRGEncoder qrgEncoder = new QRGEncoder("Jason Kyut" , null, QRGContents.Type.TEXT, 800);
 
         qrgEncoder.setColorBlack(Color.rgb(10,147,81));
         qrgEncoder.setColorWhite(Color.rgb(255,255,255));
@@ -115,10 +162,15 @@ public class generated_qr extends AppCompatActivity implements View.OnClickListe
     }
 
     public void retrieveRecentData(){
+        _id = getIntent().getStringExtra("id");
+        _name = getIntent().getStringExtra("name");
+        _type = getIntent().getStringExtra("type");
+        _barangay = getIntent().getStringExtra("barangay");
+        _address = getIntent().getStringExtra("address");
+        _number = getIntent().getStringExtra("number");
         plastic = getIntent().getStringExtra("plastic");
         brand = getIntent().getStringExtra("brand");
         kilo = getIntent().getStringExtra("kilo");
-
     }
 
 

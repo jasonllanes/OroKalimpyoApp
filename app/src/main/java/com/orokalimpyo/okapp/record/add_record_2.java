@@ -29,7 +29,7 @@ public class add_record_2 extends AppCompatActivity implements View.OnClickListe
 
 
     ImageView ivPlastic,ivBack;
-    Button btnUpload,btnCapture,btnGenerate;
+    Button btnUpload,btnCapture,btnNext;
     int camera;
     int imageSize = 224;
     Bitmap image;
@@ -44,14 +44,16 @@ public class add_record_2 extends AppCompatActivity implements View.OnClickListe
         ivPlastic = findViewById(R.id.ivPlastic);
         btnUpload = findViewById(R.id.btnUpload);
         btnCapture = findViewById(R.id.btnCapture);
-        btnGenerate = findViewById(R.id.btnGenerate);
+        btnNext = findViewById(R.id.btnNext);
 
-        retrieveRecentData();
+
 
         ivBack.setOnClickListener(this);
         btnCapture.setOnClickListener(this);
         btnUpload.setOnClickListener(this);
-        btnGenerate.setOnClickListener(this);
+        btnNext.setOnClickListener(this);
+
+        retrieveRecentData();
 
 
     }
@@ -76,8 +78,7 @@ public class add_record_2 extends AppCompatActivity implements View.OnClickListe
                     }
                 }
                 break;
-            case R.id.btnGenerate:
-
+            case R.id.btnNext:
                 saveData();
                 break;
         }
@@ -98,7 +99,7 @@ public class add_record_2 extends AppCompatActivity implements View.OnClickListe
 //                    newbitmap = Bitmap.createScaledBitmap(newbitmap, imageSize, imageSize, false);
                     ivPlastic.setImageBitmap(newbitmap);
                     camera = 0;
-                    btnGenerate.setVisibility(View.VISIBLE);
+                    btnNext.setVisibility(View.VISIBLE);
                 }else{
                     Uri dat = data.getData();
                     image = null;
@@ -110,7 +111,7 @@ public class add_record_2 extends AppCompatActivity implements View.OnClickListe
 //                    image = Bitmap.createScaledBitmap(image, imageSize, imageSize, false);
                     ivPlastic.setImageBitmap(image);
                     camera = 0;
-                    btnGenerate.setVisibility(View.VISIBLE);
+                    btnNext.setVisibility(View.VISIBLE);
                 }
             }else{
             //error message
@@ -126,7 +127,7 @@ public class add_record_2 extends AppCompatActivity implements View.OnClickListe
     }
 
     public void saveData(){
-        Intent i = new Intent(add_record_2.this, generated_qr.class);
+        Intent i = new Intent(add_record_2.this, contribution_summary.class);
         i.putExtra("plastic",plastic);
         i.putExtra("brand",brand);
         i.putExtra("kilo",kilo);

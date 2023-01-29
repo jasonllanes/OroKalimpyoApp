@@ -142,15 +142,12 @@
 
 
 
-
-
-
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnGenerate"
+                android:id="@+id/btnNext"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="gone"
-                android:text="Generate data into QR Code"
+                android:text="Next"
                 android:fontFamily="@font/pmedium"
                 android:textSize="15sp"
                 android:textColor="@color/white"

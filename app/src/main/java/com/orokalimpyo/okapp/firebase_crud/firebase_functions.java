@@ -43,7 +43,9 @@ public class firebase_functions {
     FirebaseStorage storage = FirebaseStorage.getInstance();
     StorageReference storageRef = storage.getReference();
     private Uri filePath;
+
     String _id,_type,_name,_barangay,_address,_number;
+    String contribution_id;
 
     List<String> types = new ArrayList<String>();
     List<String> barangay = new ArrayList<String>();
@@ -138,6 +140,11 @@ public class firebase_functions {
     }
 
 
+    public String retrieveID(){
+        String id = mAuth.getUid();
+        return id;
+    }
+
     public void retrieveProfile(String id,TextView type, TextView name, TextView barangay, TextView address, TextView number){
         DatabaseReference profileReference = database.getReference("Users/" + id);
         profileReference.addValueEventListener(new ValueEventListener() {
@@ -159,6 +166,8 @@ public class firebase_functions {
             }
         });
     }
+
+
 
     public List<String> retrieveUserDetails(){
         DatabaseReference profileReference = database.getReference("Users/" + mAuth.getUid());
