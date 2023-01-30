@@ -8,6 +8,7 @@ import android.Manifest;
 import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.ContentValues;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -23,11 +24,13 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
 import com.journeyapps.barcodescanner.BarcodeEncoder;
 import com.orokalimpyo.okapp.R;
 import com.orokalimpyo.okapp.firebase_crud.firebase_functions;
+import com.orokalimpyo.okapp.home.home;
 import com.orokalimpyo.okapp.profile.profile_fragment;
 
 import java.io.ByteArrayOutputStream;
@@ -53,6 +56,7 @@ public class generated_qr extends AppCompatActivity implements View.OnClickListe
 
 
     firebase_functions ff;
+    FirebaseAuth mAuth;
 
     String plastic,brand,kilo;
     String _id,_type,_name,_barangay,_address,_number;
@@ -65,6 +69,8 @@ public class generated_qr extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_generated_qr);
 
         ff = new firebase_functions();
+        mAuth = FirebaseAuth.getInstance();
+
         ivBack = findViewById(R.id.ivBack);
         btnViewRecord = findViewById(R.id.btnViewRecord);
         ivQR = findViewById(R.id.ivQR);
@@ -91,8 +97,16 @@ public class generated_qr extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.btnViewRecord:
-                saveQR();
+                Intent records = new Intent(generated_qr.this, home.class);
+                records.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(records);
+                generated_qr.this.finish();
                 break;
+            case R.id.ivBack:
+                Intent back = new Intent(generated_qr.this, home.class);
+                back.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(back);
+                generated_qr.this.finish();
         }
     }
 
@@ -126,17 +140,10 @@ public class generated_qr extends AppCompatActivity implements View.OnClickListe
         currentTime = time.format(new Date());
     }
 
-    public String generateID(){
-        String id = "";
-
-
-
-        return id;
-    }
 
     public void generateQR(ImageView imageView){
         QRGEncoder qrgEncoder = new QRGEncoder(_id + "\n" + _type+ "\n" +_name+ "\n" +_barangay+ "\n" +_address+ "\n" +_number+ "\n" + plastic
-                + "\n" + brand + "\n" + kilo + "\n" + "gs://orokalimpyo.appspot.com/"+_barangay+"Contribution_QRCodes/"+ _id+".png" , null, QRGContents.Type.TEXT, 800);
+                + "\n" + brand + "\n" + kilo + "\n" + "gs://orokalimpyo.appspot.com/TBC_Contributions/"+_barangay+"Contribution_QRCodes/"+ _id+".png" , null, QRGContents.Type.TEXT, 800);
 //        QRGEncoder qrgEncoder = new QRGEncoder("Jason Kyut" , null, QRGContents.Type.TEXT, 800);
 
         qrgEncoder.setColorBlack(Color.rgb(10,147,81));
@@ -145,11 +152,13 @@ public class generated_qr extends AppCompatActivity implements View.OnClickListe
         bitmap = qrgEncoder.getBitmap();
         // Setting Bitmap to ImageView
         imageView.setImageBitmap(bitmap);
+        ff.saveTBCContributions(this,getApplicationContext(),mAuth.getUid(),_id,_name,_type,_barangay,_address,_number,plastic,brand,kilo,currentMonth,currentDay,currentYear,currentDate,currentTime,"gs://orokalimpyo.appspot.com/TBC_Contributions/"+_barangay+"Contribution_QRCodes/"+ _id+".png");
+        saveQR();
     }
 
     public void saveQR(){
         if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-            MediaStore.Images.Media.insertImage(getContentResolver(), bitmap, "qr_code_image" , "A QR Code that is generated base on the data given");
+            MediaStore.Images.Media.insertImage(getContentResolver(), bitmap,currentDate+ "| qr_code_image" , "A QR Code that is generated base on the data given");
         } else {
             ActivityCompat.requestPermissions(generated_qr.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
         }

@@ -30,6 +30,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.orokalimpyo.okapp.authentication.log_in;
 import com.orokalimpyo.okapp.authentication.sign_up;
+import com.orokalimpyo.okapp.data.ContributionDetails;
 import com.orokalimpyo.okapp.data.UserDetails;
 import com.orokalimpyo.okapp.home.home;
 
@@ -258,16 +259,51 @@ public class firebase_functions {
     }
 
     public void saveQRStorage(byte[] bb,Context context, String barangay,String id){
-        StorageReference ref = storageRef.child(barangay+"Contribution_QRCodes/" + id + ".png");
+        StorageReference ref = storageRef.child("TBC_Contributions/" + barangay+"Contribution_QRCodes/" + id + ".png");
+
         ref.putBytes(bb).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
                 Toast.makeText(context, "Success", Toast.LENGTH_SHORT).show();
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
                 Toast.makeText(context, "Failed", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    public void saveProofStorage(byte[] bb,Context context, String barangay,String id){
+        StorageReference generalProof = storageRef.child("Proof_Contributions/" + id + ".png");
+//        StorageReference specificProof = storageRef.child(barangay+"Proof_Contributions/" + id + ".png");
+        generalProof.putBytes(bb).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+//                specificProof.putBytes(bb);;
+
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+
+            }
+        });
+    }
+
+    public void saveTBCContributions(Activity activity,Context context, String id,String contribution_id,String name,String type, String barangay, String address,
+                                     String number, String plastic,String brand,String kilo,String month,String day,String year,String date,String time,String imageLink){
+        DatabaseReference contributionsRefGeneral = database.getReference("TBC_Contributions");
+        DatabaseReference contributionsRefSpecific = database.getReference(barangay+"_TBC_Contributions");
+        ContributionDetails contributionDetails = new
+                ContributionDetails(id,contribution_id,name, type, barangay, address, number, plastic, brand, kilo, month, day, year, date, time, imageLink);
+
+        contributionsRefGeneral.child(id).setValue(contributionDetails).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                contributionsRefSpecific.child(id).setValue(contributionDetails);
+                Toast.makeText(context, "Success", Toast.LENGTH_SHORT).show();
             }
         });
     }

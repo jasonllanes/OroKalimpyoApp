@@ -2,6 +2,7 @@ package com.orokalimpyo.okapp.record;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -23,6 +24,7 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.android.material.imageview.ShapeableImageView;
@@ -51,6 +53,9 @@ public class add_record extends AppCompatActivity implements View.OnClickListene
     Bitmap image;
     firebase_functions ff;
     int camera;
+
+    LinearLayout layout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,6 +69,8 @@ public class add_record extends AppCompatActivity implements View.OnClickListene
         btnScanPlastic = findViewById(R.id.btnScanPlastic);
         btnScanBrand = findViewById(R.id.btnScanBrand);
         btnNext = findViewById(R.id.btnNext);
+
+        layout = findViewById(R.id.layout);
 
         ivBack.setOnClickListener(this);
         btnScanPlastic.setOnClickListener(this);
@@ -103,11 +110,7 @@ public class add_record extends AppCompatActivity implements View.OnClickListene
                 }
                 break;
             case R.id.btnNext:
-                Intent i = new Intent(add_record.this,add_record_2.class);
-                i.putExtra("plastic",sPlastic.getText().toString());
-                i.putExtra("brand",sBrand.getText().toString());
-                i.putExtra("kilo",etKilo.getText().toString());
-                startActivity(i);
+                sendData();
                 break;
         }
     }
@@ -165,6 +168,22 @@ public class add_record extends AppCompatActivity implements View.OnClickListene
         super.onActivityResult(requestCode, resultCode, data);
     }
 
+
+
+    public void sendData(){
+        if(sPlastic.getText().toString().isEmpty() || sBrand.getText().toString().isEmpty() || etKilo.getText().toString().isEmpty()){
+            Snackbar customSnackBar = Snackbar.make(layout, "Please fill up all fields.", Snackbar.LENGTH_LONG);
+            customSnackBar.setTextColor(ContextCompat.getColor(add_record.this,R.color.white));
+            customSnackBar.setBackgroundTint(ContextCompat.getColor(add_record.this,R.color.green));
+            customSnackBar.show();
+        }else{
+            Intent i = new Intent(add_record.this,add_record_2.class);
+            i.putExtra("plastic",sPlastic.getText().toString());
+            i.putExtra("brand",sBrand.getText().toString());
+            i.putExtra("kilo",etKilo.getText().toString());
+            startActivity(i);
+        }
+    }
     public void classifyPlastic(Bitmap image){
         try {
             ModelUnquant model = ModelUnquant.newInstance(getApplicationContext());
@@ -325,7 +344,7 @@ public class add_record extends AppCompatActivity implements View.OnClickListene
 
             @Override public void onItemSelected(MaterialSpinner view, int position, long id, String item) {
 
-                Snackbar customSnackBar = Snackbar.make(view, item, Snackbar.LENGTH_LONG);
+                Snackbar customSnackBar = Snackbar.make(view, "Type of Plastic: " + item, Snackbar.LENGTH_LONG);
                 customSnackBar.setTextColor(ContextCompat.getColor(add_record.this,R.color.white));
                 customSnackBar.setBackgroundTint(ContextCompat.getColor(add_record.this,R.color.green));
                 customSnackBar.show();
@@ -339,7 +358,7 @@ public class add_record extends AppCompatActivity implements View.OnClickListene
 
             @Override public void onItemSelected(MaterialSpinner view, int position, long id, String item) {
 
-                Snackbar customSnackBar = Snackbar.make(view, item, Snackbar.LENGTH_LONG);
+                Snackbar customSnackBar = Snackbar.make(view, "Type of Brand: " + item, Snackbar.LENGTH_LONG);
                 customSnackBar.setTextColor(ContextCompat.getColor(add_record.this,R.color.white));
                 customSnackBar.setBackgroundTint(ContextCompat.getColor(add_record.this,R.color.green));
                 customSnackBar.show();

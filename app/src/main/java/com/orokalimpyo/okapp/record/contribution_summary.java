@@ -66,7 +66,7 @@ public class contribution_summary extends AppCompatActivity implements View.OnCl
         ivBack.setOnClickListener(this);
         btnGenerate.setOnClickListener(this);
 
-//        retrieveDate();
+        retrieveDate();
         retrieveRecentData();
 
 
@@ -82,18 +82,22 @@ public class contribution_summary extends AppCompatActivity implements View.OnCl
                 finish();
                 break;
             case R.id.btnGenerate:
+
                 saveData();
                 break;
         }
     }
 
     public void retrieveRecentData(){
-        ff.retrieveProfile(mAuth.getUid(),tvName,tvType,tvAddress,tvBarangay,tvNumber);
-        id = ff.retrieveID().substring(0,9) + currentMonth + currentDay+currentYear+currentTime+currentMinute+currentSeconds;
+        ff.retrieveProfile(mAuth.getUid(),tvType,tvName,tvBarangay,tvAddress,tvNumber);
+        id = mAuth.getUid().substring(0,9) + currentMonth + currentDay+currentYear+currentHour+currentMinute+currentSeconds;
         tvID.setText(id);
         plastic = getIntent().getStringExtra("plastic");
         brand = getIntent().getStringExtra("brand");
         kilo = getIntent().getStringExtra("kilo");
+        tvPlastic.setText(plastic);
+        tvBrand.setText(brand);
+        tvKilo.setText(kilo);
 
     }
     public void saveData(){

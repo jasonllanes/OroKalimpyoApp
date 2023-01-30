@@ -20,6 +20,7 @@ import android.widget.ImageView;
 
 import com.google.android.material.imageview.ShapeableImageView;
 import com.orokalimpyo.okapp.R;
+import com.orokalimpyo.okapp.firebase_crud.firebase_functions;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -35,10 +36,14 @@ public class add_record_2 extends AppCompatActivity implements View.OnClickListe
     Bitmap image;
     String plastic,brand,kilo;
     String _id,_type,_name,_barangay,_address,_number;
+
+    firebase_functions ff;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_record2);
+
+        ff = new firebase_functions();
 
         ivBack = findViewById(R.id.ivBack);
         ivPlastic = findViewById(R.id.ivPlastic);
@@ -79,6 +84,10 @@ public class add_record_2 extends AppCompatActivity implements View.OnClickListe
                 }
                 break;
             case R.id.btnNext:
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                image.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                byte [] byteArray = stream.toByteArray();
+                ff.saveProofStorage(byteArray,getApplicationContext(),_barangay,_id);
                 saveData();
                 break;
         }
@@ -88,7 +97,7 @@ public class add_record_2 extends AppCompatActivity implements View.OnClickListe
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         if(resultCode == RESULT_OK){
                 if(requestCode == 3){
-                    Bitmap image = (Bitmap) data.getExtras().get("data");
+                    image = (Bitmap) data.getExtras().get("data");
 
 //                    image = (Bitmap) data.getExtras().get("data");
 //                    int dimension = Math.min(image.getWidth(), image.getHeight());
@@ -127,6 +136,8 @@ public class add_record_2 extends AppCompatActivity implements View.OnClickListe
     }
 
     public void saveData(){
+
+
         Intent i = new Intent(add_record_2.this, contribution_summary.class);
         i.putExtra("plastic",plastic);
         i.putExtra("brand",brand);
