@@ -97,7 +97,7 @@ public class generated_qr extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.btnViewRecord:
-                Intent records = new Intent(generated_qr.this, home.class);
+                Intent records = new Intent(generated_qr.this, view_contributions.class);
                 records.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(records);
                 generated_qr.this.finish();

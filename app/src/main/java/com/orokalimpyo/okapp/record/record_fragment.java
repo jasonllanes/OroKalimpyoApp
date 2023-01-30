@@ -88,7 +88,7 @@ public class record_fragment extends Fragment implements View.OnClickListener  {
                 startActivity(addRecord);
                 break;
             case R.id.btnShowRecord:
-                Intent i = new Intent(getContext(),add_record.class);
+                Intent i = new Intent(getContext(),view_contributions.class);
                 startActivity(i);
                 break;
         }

@@ -8,12 +8,18 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -24,21 +30,30 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.jaredrummler.materialspinner.MaterialSpinner;
+import com.orokalimpyo.okapp.R;
 import com.orokalimpyo.okapp.authentication.log_in;
 import com.orokalimpyo.okapp.authentication.sign_up;
 import com.orokalimpyo.okapp.data.ContributionDetails;
+import com.orokalimpyo.okapp.data.ContributionListData;
+import com.orokalimpyo.okapp.data.UpdateDetails;
 import com.orokalimpyo.okapp.data.UserDetails;
 import com.orokalimpyo.okapp.home.home;
+
+import com.firebase.ui.database.FirebaseListAdapter;
+import com.firebase.ui.database.FirebaseListOptions;
+import com.orokalimpyo.okapp.record.edit_contribution;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class firebase_functions {
-
+    FirebaseListAdapter listAdapter;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     FirebaseAuth mAuth;
     FirebaseStorage storage = FirebaseStorage.getInstance();
@@ -158,6 +173,26 @@ public class firebase_functions {
                 address.setText(snapshot.child("address").getValue(String.class));
                 number.setText(snapshot.child("number").getValue(String.class));
 
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+
+    public void retrieveForEditting(String id,String contribution_id, MaterialSpinner plastic, MaterialSpinner brand, EditText kilo){
+        DatabaseReference profileReference = database.getReference("TBC_Contributions/" + id+"/"+contribution_id);
+        profileReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                plastic.setText(snapshot.child("plastic").getValue(String.class));
+                brand.setText(snapshot.child("brand").getValue(String.class));
+                kilo.setText(snapshot.child("kilo").getValue(String.class));
 
             }
 
@@ -292,6 +327,20 @@ public class firebase_functions {
         });
     }
 
+    public void updateContribution(Context context,String id,String contribution_id,String barangay,String plastic,String brand,String kilo){
+        DatabaseReference contributionsRefSpecific = database.getReference(barangay+"_TBC_Contributions");
+        DatabaseReference contributionsRefGeneral = database.getReference("TBC_Contributions");
+        UpdateDetails updateDetails = new UpdateDetails(plastic,brand,kilo);
+
+        contributionsRefGeneral.child(id).child(contribution_id).setValue(updateDetails).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                contributionsRefSpecific.child(id).setValue(updateDetails);
+                Toast.makeText(context, "Successfully Edited", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
     public void saveTBCContributions(Activity activity,Context context, String id,String contribution_id,String name,String type, String barangay, String address,
                                      String number, String plastic,String brand,String kilo,String month,String day,String year,String date,String time,String imageLink){
         DatabaseReference contributionsRefGeneral = database.getReference("TBC_Contributions");
@@ -299,7 +348,7 @@ public class firebase_functions {
         ContributionDetails contributionDetails = new
                 ContributionDetails(id,contribution_id,name, type, barangay, address, number, plastic, brand, kilo, month, day, year, date, time, imageLink);
 
-        contributionsRefGeneral.child(id).setValue(contributionDetails).addOnCompleteListener(new OnCompleteListener<Void>() {
+        contributionsRefGeneral.child(id).child(contribution_id).setValue(contributionDetails).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 contributionsRefSpecific.child(id).setValue(contributionDetails);
@@ -307,4 +356,21 @@ public class firebase_functions {
             }
         });
     }
+
+//    public void saveTBCContributions(Activity activity,Context context, String id,String contribution_id,String name,String type, String barangay, String address,
+//                                     String number, String plastic,String brand,String kilo,String month,String day,String year,String date,String time,String imageLink){
+//        DatabaseReference contributionsRefGeneral = database.getReference("TBC_Contributions");
+//        DatabaseReference contributionsRefSpecific = database.getReference(barangay+"_TBC_Contributions");
+//        ContributionDetails contributionDetails = new
+//                ContributionDetails(id,contribution_id,name, type, barangay, address, number, plastic, brand, kilo, month, day, year, date, time, imageLink);
+//
+//        contributionsRefGeneral.child(id).child(contribution_id).setValue(contributionDetails).addOnCompleteListener(new OnCompleteListener<Void>() {
+//            @Override
+//            public void onComplete(@NonNull Task<Void> task) {
+//                contributionsRefSpecific.child(id).child(contribution_id).setValue(contributionDetails);
+//                Toast.makeText(context, "Success", Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//    }
+
 }
