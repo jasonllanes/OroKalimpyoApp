@@ -29,6 +29,7 @@ import android.widget.TextView;
 
 import com.google.android.material.imageview.ShapeableImageView;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.FirebaseAuth;
 import com.jaredrummler.materialspinner.MaterialSpinner;
 import com.orokalimpyo.okapp.R;
 import com.orokalimpyo.okapp.firebase_crud.firebase_functions;
@@ -41,6 +42,8 @@ import org.tensorflow.lite.support.tensorbuffer.TensorBuffer;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class add_record extends AppCompatActivity implements View.OnClickListener {
     int imageSize = 224;
@@ -56,12 +59,19 @@ public class add_record extends AppCompatActivity implements View.OnClickListene
 
     LinearLayout layout;
 
+    FirebaseAuth mAuth;
+    String id;
+
+    SimpleDateFormat month,day,year,week,date,hours,minutes,seconds,time;
+    String currentMonth,currentDay,currentYear,currentWeek,currentDate,currentHour,currentMinute,currentSeconds,currentTime;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_record);
 
         ff = new firebase_functions();
+        mAuth = FirebaseAuth.getInstance();
         ivBack = findViewById(R.id.ivBack);
         sPlastic = findViewById(R.id.sPlastic);
         sBrand = findViewById(R.id.sBrand);
@@ -78,6 +88,8 @@ public class add_record extends AppCompatActivity implements View.OnClickListene
         btnNext.setOnClickListener(this);
 
         populateSpinners();
+        retrieveDate();
+        retrieveRecentData();
 
     }
 
@@ -168,7 +180,40 @@ public class add_record extends AppCompatActivity implements View.OnClickListene
         super.onActivityResult(requestCode, resultCode, data);
     }
 
+    public void retrieveDate(){
+        month = new SimpleDateFormat("MM");
+        day = new SimpleDateFormat("dd");
+        year = new SimpleDateFormat("yy");
 
+        week = new SimpleDateFormat("W");
+
+        date = new SimpleDateFormat("MM/dd/yy");
+
+        hours = new SimpleDateFormat("hh");
+        minutes = new SimpleDateFormat("mm");
+        seconds = new SimpleDateFormat("ss");
+
+        time = new SimpleDateFormat("hh:mm:ss a");
+
+        currentMonth = month.format(new Date());
+        currentDay = day.format(new Date());
+        currentYear = year.format(new Date());
+
+        currentWeek = week.format(new Date());
+
+        currentDate = date.format(new Date());
+
+        currentHour = hours.format(new Date());
+        currentMinute = minutes.format(new Date());
+        currentSeconds = seconds.format(new Date());
+
+        currentTime = time.format(new Date());
+
+    }
+
+    public void retrieveRecentData(){
+        id = mAuth.getUid().substring(0,9) + currentMonth + currentDay+currentYear+currentHour+currentMinute+currentSeconds;
+    }
 
     public void sendData(){
         if(sPlastic.getText().toString().isEmpty() || sBrand.getText().toString().isEmpty() || etKilo.getText().toString().isEmpty()){
@@ -178,6 +223,7 @@ public class add_record extends AppCompatActivity implements View.OnClickListene
             customSnackBar.show();
         }else{
             Intent i = new Intent(add_record.this,add_record_2.class);
+            i.putExtra("contribution_id",id);
             i.putExtra("plastic",sPlastic.getText().toString());
             i.putExtra("brand",sBrand.getText().toString());
             i.putExtra("kilo",etKilo.getText().toString());

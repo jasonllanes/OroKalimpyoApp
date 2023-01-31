@@ -344,6 +344,7 @@ public class firebase_functions {
     public void saveTBCContributions(Activity activity,Context context, String id,String contribution_id,String name,String type, String barangay, String address,
                                      String number, String plastic,String brand,String kilo,String month,String day,String year,String date,String time,String imageLink){
         DatabaseReference contributionsRefGeneral = database.getReference("TBC_Contributions");
+        DatabaseReference contributionsDashboardData = database.getReference("Contributions");
         DatabaseReference contributionsRefSpecific = database.getReference(barangay+"_TBC_Contributions");
         ContributionDetails contributionDetails = new
                 ContributionDetails(id,contribution_id,name, type, barangay, address, number, plastic, brand, kilo, month, day, year, date, time, imageLink);
@@ -351,6 +352,7 @@ public class firebase_functions {
         contributionsRefGeneral.child(id).child(contribution_id).setValue(contributionDetails).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
+                contributionsDashboardData.child(contribution_id).setValue(contributionDetails);
                 contributionsRefSpecific.child(id).setValue(contributionDetails);
                 Toast.makeText(context, "Success", Toast.LENGTH_SHORT).show();
             }

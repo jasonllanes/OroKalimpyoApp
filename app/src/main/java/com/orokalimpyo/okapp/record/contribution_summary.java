@@ -90,7 +90,8 @@ public class contribution_summary extends AppCompatActivity implements View.OnCl
 
     public void retrieveRecentData(){
         ff.retrieveProfile(mAuth.getUid(),tvType,tvName,tvBarangay,tvAddress,tvNumber);
-        id = mAuth.getUid().substring(0,9) + currentMonth + currentDay+currentYear+currentHour+currentMinute+currentSeconds;
+//        id = mAuth.getUid().substring(0,9) + currentMonth + currentDay+currentYear+currentHour+currentMinute+currentSeconds;
+        id = getIntent().getStringExtra("contribution_id");
         tvID.setText(id);
         plastic = getIntent().getStringExtra("plastic");
         brand = getIntent().getStringExtra("brand");
@@ -103,7 +104,7 @@ public class contribution_summary extends AppCompatActivity implements View.OnCl
     public void saveData(){
 
         Intent i = new Intent(contribution_summary.this, generated_qr.class);
-        i.putExtra("id", tvID.getText().toString());
+        i.putExtra("contribution_id", tvID.getText().toString());
         i.putExtra("name",tvName.getText().toString());
         i.putExtra("type",tvType.getText().toString());
         i.putExtra("address",tvAddress.getText().toString());

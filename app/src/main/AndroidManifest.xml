@@ -19,6 +19,15 @@
         android:theme="@style/Theme.MaterialComponents.NoActionBar"
         tools:targetApi="31">
         <activity
+            android:name=".admin.admin_scanning_qr"
+            android:exported="false" />
+        <activity
+            android:name=".admin.admin_scan_qr"
+            android:exported="false" />
+        <activity
+            android:name=".admin.admin_home"
+            android:exported="false" />
+        <activity
             android:name=".record.edit_contribution"
             android:exported="false" />
         <activity

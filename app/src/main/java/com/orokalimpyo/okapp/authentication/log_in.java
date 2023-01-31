@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.orokalimpyo.okapp.R;
+import com.orokalimpyo.okapp.admin.admin_home;
 import com.orokalimpyo.okapp.firebase_crud.firebase_functions;
 import com.orokalimpyo.okapp.home.home;
 
@@ -44,6 +45,10 @@ public class log_in extends AppCompatActivity implements View.OnClickListener {
             case R.id.btnLogin:
                 String email = etEmail.getText().toString();
                 String password = etPassword.getText().toString();
+                if(etEmail.getText().toString().equalsIgnoreCase("admin@gmail.com") && etPassword.getText().toString().equalsIgnoreCase("admin123")){
+                    Intent i = new Intent(log_in.this, admin_home.class);
+                    startActivity(i);
+                }
                 if(etEmail.getText().toString().isEmpty()){
                     etEmail.setError("Please enter your email");
                 }else if(etPassword.getText().toString().isEmpty()){

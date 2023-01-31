@@ -27,13 +27,16 @@ import com.google.firebase.database.Query;
 import com.orokalimpyo.okapp.R;
 import com.orokalimpyo.okapp.data.ContributionListData;
 import com.orokalimpyo.okapp.firebase_crud.firebase_functions;
+import com.orokalimpyo.okapp.home.home;
 
-public class view_contributions extends AppCompatActivity {
+public class view_contributions extends AppCompatActivity implements View.OnClickListener {
 
     FirebaseListAdapter listAdapter;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     TextView tvID,tvDate;
     ListView lvContributions;
+    ImageView ivBack;
+
 
     firebase_functions ff;
     FirebaseAuth mAuth;
@@ -48,6 +51,8 @@ public class view_contributions extends AppCompatActivity {
         ff = new firebase_functions();
 
 
+        ivBack = findViewById(R.id.ivBack);
+        ivBack.setOnClickListener(this);
 
 
         retrieveContributions(this,mAuth.getUid(),lvContributions);
@@ -112,4 +117,15 @@ public class view_contributions extends AppCompatActivity {
         listAdapter.stopListening();
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.ivBack:
+                Intent i = new Intent(view_contributions.this, home.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(i);
+                finish();
+                break;
+        }
+    }
 }

@@ -34,7 +34,7 @@ public class add_record_2 extends AppCompatActivity implements View.OnClickListe
     int camera;
     int imageSize = 224;
     Bitmap image;
-    String plastic,brand,kilo;
+    String id,plastic,brand,kilo;
     String _id,_type,_name,_barangay,_address,_number;
 
     firebase_functions ff;
@@ -87,7 +87,7 @@ public class add_record_2 extends AppCompatActivity implements View.OnClickListe
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
                 image.compress(Bitmap.CompressFormat.PNG, 100, stream);
                 byte [] byteArray = stream.toByteArray();
-                ff.saveProofStorage(byteArray,getApplicationContext(),_barangay,_id);
+                ff.saveProofStorage(byteArray,getApplicationContext(),_barangay,id);
                 saveData();
                 break;
         }
@@ -129,6 +129,7 @@ public class add_record_2 extends AppCompatActivity implements View.OnClickListe
     }
 
     public void retrieveRecentData(){
+        id = getIntent().getStringExtra("contribution_id");
         plastic = getIntent().getStringExtra("plastic");
         brand = getIntent().getStringExtra("brand");
         kilo = getIntent().getStringExtra("kilo");
@@ -139,6 +140,7 @@ public class add_record_2 extends AppCompatActivity implements View.OnClickListe
 
 
         Intent i = new Intent(add_record_2.this, contribution_summary.class);
+        i.putExtra("contribution_id",id);
         i.putExtra("plastic",plastic);
         i.putExtra("brand",brand);
         i.putExtra("kilo",kilo);

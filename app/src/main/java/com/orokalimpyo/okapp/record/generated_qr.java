@@ -171,7 +171,7 @@ public class generated_qr extends AppCompatActivity implements View.OnClickListe
     }
 
     public void retrieveRecentData(){
-        _id = getIntent().getStringExtra("id");
+        _id = getIntent().getStringExtra("contribution_id");
         _name = getIntent().getStringExtra("name");
         _type = getIntent().getStringExtra("type");
         _barangay = getIntent().getStringExtra("barangay");
