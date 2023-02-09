@@ -3,6 +3,7 @@ package com.orokalimpyo.okapp.record;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -12,8 +13,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.Registry;
+import com.bumptech.glide.annotation.GlideModule;
+import com.bumptech.glide.module.AppGlideModule;
 import com.firebase.ui.database.FirebaseListAdapter;
 import com.firebase.ui.database.FirebaseListOptions;
+import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -24,10 +29,15 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.orokalimpyo.okapp.GlideApp;
 import com.orokalimpyo.okapp.R;
 import com.orokalimpyo.okapp.data.ContributionListData;
 import com.orokalimpyo.okapp.firebase_crud.firebase_functions;
 import com.orokalimpyo.okapp.home.home;
+
+import java.io.InputStream;
 
 public class view_contributions extends AppCompatActivity implements View.OnClickListener {
 
@@ -40,7 +50,7 @@ public class view_contributions extends AppCompatActivity implements View.OnClic
 
     firebase_functions ff;
     FirebaseAuth mAuth;
-
+    StorageReference storageReference;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,7 +94,8 @@ public class view_contributions extends AppCompatActivity implements View.OnClic
 
 
                 //set the proper link when saving already the contribution for this to work
-                Glide.with(activity).load("https://firebasestorage.googleapis.com/v0/b/orokalimpyo.appspot.com/o/TBC_Contributions%2FNazarethContribution_QRCodes%2F5B7uY3Ioe013023034102.png?alt=media&token=a6f2bc95-baf9-4f13-b00f-610f3f0d9601").into(qr);
+                storageReference = FirebaseStorage.getInstance().getReference("TBC_Contributions/").child(barangay+"Contribution_QRCodes/"+contribution_id.getText().toString() + ".png");
+                GlideApp.with(getApplicationContext()).load(storageReference).into(qr);
 
                 contributionList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
@@ -128,4 +139,7 @@ public class view_contributions extends AppCompatActivity implements View.OnClic
                 break;
         }
     }
+
+
+
 }

@@ -8,17 +8,19 @@ public class ContributionListData {
     public String time;
     public String plastic;
 
+    public String link;
     public ContributionListData(){
 
     }
 
-    public ContributionListData(String id,String contribution_id, String barangay, String date, String time, String plastic) {
+    public ContributionListData(String id,String contribution_id, String barangay, String date, String time, String plastic,String link) {
         this.id = id;
         this.contribution_id = contribution_id;
         this.barangay = barangay;
         this.date = date;
         this.time = time;
         this.plastic = plastic;
+        this.link = link;
     }
 
     public String getId() {
@@ -69,7 +71,11 @@ public class ContributionListData {
         this.plastic = plastic;
     }
 
+    public String getLink() {
+        return link;
+    }
 
-
-
+    public void setLink(String link) {
+        this.link = link;
+    }
 }

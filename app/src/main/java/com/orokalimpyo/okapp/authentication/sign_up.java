@@ -76,6 +76,7 @@ public class sign_up extends AppCompatActivity implements View.OnClickListener {
 
         sBarangay = (MaterialSpinner) findViewById(R.id.sBarangay);
         sBarangay.setItems(ff.populateBarangay());
+
         sBarangay.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener<String>() {
 
             @Override public void onItemSelected(MaterialSpinner view, int position, long id, String item) {

@@ -50,7 +50,9 @@ import com.firebase.ui.database.FirebaseListOptions;
 import com.orokalimpyo.okapp.record.edit_contribution;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class firebase_functions {
     FirebaseListAdapter listAdapter;
@@ -156,11 +158,6 @@ public class firebase_functions {
     }
 
 
-    public String retrieveID(){
-        String id = mAuth.getUid();
-        return id;
-    }
-
     public void retrieveProfile(String id,TextView type, TextView name, TextView barangay, TextView address, TextView number){
         DatabaseReference profileReference = database.getReference("Users/" + id);
         profileReference.addValueEventListener(new ValueEventListener() {
@@ -184,6 +181,7 @@ public class firebase_functions {
     }
 
 
+
     public void retrieveForEditting(String id,String contribution_id, MaterialSpinner plastic, MaterialSpinner brand, EditText kilo){
         DatabaseReference profileReference = database.getReference("TBC_Contributions/" + id+"/"+contribution_id);
         profileReference.addValueEventListener(new ValueEventListener() {
@@ -201,6 +199,31 @@ public class firebase_functions {
 
             }
         });
+    }
+
+    public void retrieveAllSpecificID(String id,String contribution_id,String name){
+//        String type, String barangay, String address, String number, String plastic, String brand, String kilo, String month, String day, String year, String date, String time,String imageLink
+
+        DatabaseReference profileReference = database.getReference("TBC_Contributions/" +id+"/"+contribution_id);
+        profileReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                snapshot.child("name").getValue(String.class);
+
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+
+
     }
 
 
@@ -332,7 +355,11 @@ public class firebase_functions {
         DatabaseReference contributionsRefGeneral = database.getReference("TBC_Contributions");
         UpdateDetails updateDetails = new UpdateDetails(plastic,brand,kilo);
 
-        contributionsRefGeneral.child(id).child(contribution_id).setValue(updateDetails).addOnCompleteListener(new OnCompleteListener<Void>() {
+        Map<String, Object> updates = new HashMap<>();
+        updates.put("plastic", plastic);
+        updates.put("brand", brand);
+        updates.put("kilo", kilo);
+        contributionsRefGeneral.child(id).child(contribution_id).updateChildren(updates).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 contributionsRefSpecific.child(id).setValue(updateDetails);
